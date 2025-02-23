@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saiitek</title>
+    <style>
+        @font-face {
+            font-family: 'Noyh Heavy';
+            src: url('fonts/noyh-heavy.woff2') format('woff2'),
+                url('fonts/noyh-heavy.woff') format('woff'),
+                url('fonts/noyh-heavy.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noyh Heavy', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #mainContent {
+            display: block;
+        }
+
+        #servicePage {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto; /* Ensure scrolling */
+    background-color: #e4ebfa;
+}
+
+
+        /* Service page*/ 
+
+        .nav-header {
+            background: rgba(240, 240, 240, 0.9);
+            padding: 15px;
+            width: 100%;
+            position: relative; /* Allow it to scroll with the page */
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+        
+
+        nav {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            max-width: 100%;
+            margin: 0;
+            padding: 0 30px;
+        }
+
+        .back-icon {
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            left: -10px;
+        }
+
+        .back-icon img {
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .back-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .back-icon:active {
+            animation: fadeOut 0.3s ease-in-out;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.8); }
+        }
+
+        /* General body styling of service page */
+        .servicepage {
+            background: #b77b13;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            
+        }
+        
+        /* Main heading styling */
+        h1 {
+            color: #2b60e0;
+            font-size: 40px;
+            margin-top: 20px;
+        }
+
+                /* Header and its animation */
+
+
+        @keyframes fadeInBounceSmooth {
+            0% {
+                opacity: 0;
+                transform: translateY(-40px);
+            }
+            40% {
+                opacity: 0.6;
+                transform: translateY(5px);
+            }
+            70% {
+                opacity: 0.8;
+                transform: translateY(-2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+      
+
+        .header-serv {
+            color: #2b60e0;
+            font-size: 4.5em;
+            margin-top: 50px;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            opacity: 0; /* Initially hidden */
+            transition: opacity 1s ease-out;
+            justify-content: center;
+
+        }
+
+        .animate {
+            animation: fadeInBounceSmooth 2s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 1 !important;
+        }
+        
+        /* Container for service boxes */
+        .services-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items from top to ensure uniformity */
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 20px;
+        }
+        
+        /* Individual service box styling */
+        .service {
+            width: 300px; /* Decreased width slightly */
+            height: 360px; /* Increased height slightly */
+            background: #eaf0fa;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.4); /* Softer white border */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center;
+        }
+
+        .service a{
+            text-decoration: none;
+            
+        }
+        
+        /* Hover effect for service box */
+        .service:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 40px rgba(43, 96, 224, 1); /* Increased glow effect */
+        }
+        
+        /* Styling for the images inside the boxes */
+        .service img {
+            width: 90%; /* Increased size */
+            height: 140px; /* Adjusted for better alignment */
+            border-radius: 20px; /* Rounded square shape */
+            object-fit: cover;
+        }
+        
+        /* Styling for service title */
+        .service h3 {
+            color: #2b60e0;
+            font-size: 20px;
+            margin: 10px 0 5px;
+            text-align: center;
+            min-height: 50px; /* Ensures uniform height for all headings */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+
+        }
+        
+        /* Styling for service description */
+        .service p {
+            font-size: 16px;
+            font-weight: 550;
+            color: #444;
+            text-align: left; /* Aligns all text from the same line */
+            line-height: 1.4;
+            padding: 0 15px;
+            max-width: 280px;
+            margin-top: 0; /* Ensures uniform start position */
+            margin-bottom: 30px; /* More space at bottom for consistency */
+            align-self: flex-start;
+            text-decoration: none;
+
+        }
+        
+        /* Responsive design adjustments for smaller screens */
+        @media (max-width: 600px) {
+            .services-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .service {
+                width: 85%;
+                max-width: 270px;
+            }
+        }
+
+        /* service content */
+        
+        .section-service, .section {
+            padding: 60px 10px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+
+        }
+        .service-subheads {
+            font-size: 3em;
+            font-weight: bold;
+            color: #0057ff;
+            text-decoration: none;
+
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+
+        }
+        .image-container img {
+            width: 90%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+        }
+        .texts {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+            max-width: 90%;
+            line-height: 2;
+            text-align: justify;
+        }
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        @media (max-width: 768px) {
+            .section-service, .section {
+                padding: 40px 5px;
+            }
+            .service-subheads {
+                font-size: 30px;
+            }
+            .texts {
+                font-size: 14px;
+            }
+        }
+
+        .scroll-animation {
+    animation: fadeInZoom 0.8s ease-in-out;
+}
+
+@keyframes fadeInZoom {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+        /* Navbar styles */
+        header {
+            background: rgba(240, 240, 240, 0.9);
+            padding: 15px 20px;
+            width: 100%;
+            position: relative;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .logo img {
+            width: 180px;
+            max-height: 80px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: large;
+            font-weight: bold;
+            position: relative;
+            padding: 7px 0;
+            transition: color 0.3s ease-in-out;
+        }
+
+        /* Underline hover effect */
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background-color: #007bff;
+            transition: width 0.4s ease-in-out;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            color: black;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+                background: white;
+                backdrop-filter: blur(10px);
+                padding: 10px 0;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+            }
+        }
+
+/* Hero section */
+.hero {
+    display: flex;
+    justify-content: flex-start; /* Align content to the left */
+    align-items: center;
+    width: 100%;
+    height: 700px;
+    background-color: #E8EFFC;
+    background-image: url("https://i.ibb.co/F4kyp400/new-1-1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    padding: 50px; /* Adds space from the left */
+}
+
+/* Hero content */
+.hero-content {
+    max-width: 50%;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1.5s ease-out forwards;
+    margin-left: 15%;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Heading styles */
+.hero-content h1 {
+    font-size: 4em;
+    font-weight: bolder;
+    background: linear-gradient(315deg, #87CEFA, #4682B4);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 30px;
+}
+
+/* Button styles */
+.hero-content button {
+    background-color: #1E90FF;
+    color: white;
+    padding: 15px 30px;
+    border: 2px solid #1E90FF;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out, background-color 0.3s, color 0.3s;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-left: 50%;
+}
+
+/* Button hover effect */
+.hero-content button:hover {
+    transform: scale(0.9);
+    background-color: transparent;
+    color: #1E90FF;
+    border: 2px solid #1E90FF;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero {
+        height: 600px;
+        background-size: cover;
+        padding: 40px;
+    }
+    .hero-content h1 {
+        font-size: 3em;
+    }
+    .hero-content button {
+        font-size: 1em;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 786px) {
+    .hero {
+        display: flex;
+        flex-direction: column; /* Ensures content stacks properly */
+        align-items: flex-start; /* Aligns text to the left */
+        justify-content: center; /* Centers vertically */
+        height: auto; /* Adjusts based on content */
+        padding: 10px;
+        background-size: contain; /* Ensures the full image is visible */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents repetition */
+    }
+    .hero-content {
+        width: 100%; /* Ensures content is responsive */
+        text-align: left;
+    }
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    .hero-content button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .hero {
+        display: flex;
+        flex-direction: column; /* Ensures content stacks properly */
+        align-items: flex-start; /* Aligns text to the left */
+        justify-content: center; /* Centers vertically */
+        height: auto; /* Adjusts based on content */
+        padding: 10px;
+        background-size: contain; /* Ensures the full image is visible */
+        background-position: center; /* Centers the image */
+        background-repeat: no-repeat; /* Prevents repetition */
+    }
+    .hero-content {
+        width: 100%; /* Ensures content is responsive */
+        text-align: left;
+    }
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    .hero-content button {
+        font-size: 0.9em;
+        padding: 8px 16px;
+    }
+}
+
+
+
+
+
+        
+      
+         /* Our Mission Section */
+         .mission {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 0;
+            background: rgba(240, 240, 240, 0.9);
+
+        }
+
+        .mission-container {
+            display: flex;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px;
+            border-radius: 10px;
+            flex-wrap: wrap;
+        }
+
+        .mission-text {
+            flex: 1;
+            margin-left: 20px;
+            padding-right: 30px;
+            text-align: left;
+        }
+
+        .mission-text h2 {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            
+
+        }
+
+        .mission-text span {
+            color: #1E90FF;
+        }
+
+        .mission-text p {
+            font-size: 1.8em;
+            font-weight: 200;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .mission-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .mission-image img {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 50px;
+        }
+      
+      
+      /* Responsive Design - Small Screens */
+    @media (max-width: 768px) {
+    .mission-container {
+        flex-direction: column; /* Stack elements vertically */
+        text-align: center; /* Center text for smaller screens */
+    }
+
+    .mission-text {
+        margin-left: 0; /* Remove left margin */
+        padding-right: 0; /* Remove right padding */
+        padding: 0px; /* Add padding for spacing */
+    }
+
+    .mission-text h2 {
+        font-size: 3em; /* Adjust font size for smaller screens */
+    }
+
+    .mission-text p {
+        font-size: 1.8em; /* Adjust paragraph font size */
+    }
+
+    .mission-image {
+        margin-top: 20px; /* Add margin for spacing */
+    }
+}
+
+@media (max-width: 480px) {
+    .mission-text h2 {
+        font-size: 3em; /* Further adjust font size for very small screens */
+    }
+
+    .mission-text p {
+        font-size: 1.5em; /* Further adjust paragraph font size */
+    }
+}
+
+        /* Clients Section */
+        .clients {
+            padding: 0 0;
+            height: 40vh;
+        }
+        .clients h3{
+            text-align: center;
+            margin: 50px 0;
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            
+
+
+        }
+
+        .clients span {
+            color: #1E90FF;
+        }
+
+        :root {
+            --marquee-width: 100vw;
+            --marquee-height: 20vh;
+        /* --marquee-elements: 12; */ /* defined with JavaScript */
+            --marquee-elements-displayed: 5;
+            --marquee-element-width: calc(var(--marquee-width) / var(--marquee-elements-displayed));
+            --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
+
+        }
+
+        .marquee {
+          width: var(--marquee-width);
+          height: var(--marquee-height);
+          color: #eee;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .marquee:before, .marquee:after {
+          position: absolute;
+          top: 0;
+          width: 10rem;
+          height: 100%;
+          content: "";
+          z-index: 1;
+        }
+
+        .marquee:before {
+          left: 0;
+          background: linear-gradient(to right, #fefdfd 0%, transparent 100%);
+        }
+
+        .marquee:after {
+          right: 0;
+          background: linear-gradient(to left, #fefdfd 0%, transparent 100%);
+        }
+
+        .marquee-content {
+          list-style: none;
+          height: 100%;
+          display: flex;
+          animation: scrolling var(--marquee-animation-duration) linear infinite;
+        }
+
+        /* .marquee-content:hover {
+          animation-play-state: paused;
+        } */
+        @keyframes scrolling {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-1 * var(--marquee-element-width) * var(--marquee-elements))); }
+        }
+
+        .marquee-content li {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          /* text-align: center; */
+          flex-shrink: 0;
+          width: var(--marquee-element-width);
+          max-height: 100%;
+          font-size: calc(var(--marquee-height)*3/4); /* 5rem; */
+          white-space: nowrap;
+          padding: 20px; /* Adds some space around each image */
+
+        }
+
+        .marquee-content li img {
+          width: 100%;
+          gap: 10px;
+          /* height: 100%; */
+          margin: 10px; /* Adds space between images */
+        
+        }
+
+        @media (max-width: 600px) {
+          html { font-size: 12px; }
+          :root {
+            --marquee-width: 100vw;
+            --marquee-height: 16vh;
+            --marquee-elements-displayed: 3;
+          }
+          .marquee:before, .marquee:after { width: 5rem; }
+        }
+
+        /* Certification Section  */
+
+.certification-container{
+    background: linear-gradient(to right, #2dd4bf, #2563eb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40vh;
+}       
+
+.certification-section {
+    text-align: center;
+    color: black;
+    padding: 20px;
+}
+
+.certifications {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px; /* Increased spacing between images */
+    margin-bottom: 30px;
+}
+
+.cert {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-img {
+    width: 350px;  /* Increased size */
+    height: 250px;
+    border-radius: 5px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.badge-img {
+    position: absolute;
+    bottom: -30px; /* Adjusted for the larger badge */
+    width: 150px;  /* Increased size */
+    height: 100px;
+    border-radius: 5px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.text {
+    font-size: 2em; /* Slightly larger text */
+    font-weight: bold;
+    margin-top: 80px;
+}
+      
+      /* Responsive Design - Small Screens */
+@media (max-width: 768px) {
+    .certifications {
+        flex-direction: column; /* Stack elements vertically */
+        gap: 30px; /* Adjust gap for smaller screens */
+    }
+
+    .cert {
+        width: 100%; /* Allow cert to take full width */
+        max-width: 300px; /* Set a max width for the certification cards */
+    }
+
+    .main-img {
+        width: 100%; /* Make the main image responsive */
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .badge-img {
+        width: 100px; /* Adjust badge size */
+        height: auto; /* Maintain aspect ratio */
+        bottom: -20px; /* Adjust position for smaller screens */
+    }
+
+    .text {
+        font-size: 1.5em; /* Adjust text size for smaller screens */
+        margin-top: 40px; /* Adjust margin for spacing */
+    }
+}
+
+@media (max-width: 480px) {
+    .text {
+        font-size: 1.2em; /* Further adjust text size for very small screens */
+    }
+}
+
+/* contact section */
+
+
+
+.contact-container {
+    text-align: center;
+    padding: 50px 0;
+
+}
+
+h2 {
+    color: #1E90FF;
+    font-size: 3em;
+    font-weight: bolder;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    
+
+
+}
+
+.contact-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 20px;
+}
+
+.qr-code img {
+    width: 300px;
+    height: 300px;
+}
+
+.contact-info {
+    text-align: left;
+    font-size: 1.5em;
+}
+
+.contact-info strong {
+    color: #1E90FF;
+    font-size: 1em;
+
+}
+
+.contact-info a { 
+    text-decoration: none;
+    color: #333;
+}
+      
+      /* Responsive Design - Small Screens */
+@media (max-width: 768px) {
+    .contact-content {
+        flex-direction: column; /* Stack elements vertically */
+        gap: 20px; /* Adjust gap for smaller screens */
+    }
+
+    .qr-code img {
+        width: 200px; /* Adjust QR code size */
+        height: 200px; /* Maintain aspect ratio */
+    }
+
+    .contact-info {
+        text-align: center; /* Center text for smaller screens */
+        font-size: 1.2em; /* Adjust font size for readability */
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 2.5em; /* Further adjust heading size for very small screens */
+    }
+
+    .contact-info {
+        font-size: 1em; /* Further adjust font size for very small screens */
+    }
+}
+
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* animation for headings*/
+      
+       /* Heading Animation */
+.section-heading {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.section-heading.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Add this to your existing CSS */
+@media (max-width: 768px) {
+    .section-heading {
+        opacity: 1; /* Ensure it's fully visible */
+        transform: translateY(0); /* Reset the transform */
+        transition: none; /* Disable transition */
+    }
+}
+
+/* For service page */
+
+#servicePage {
+            display: none;
+        }
+
+       
+
+    </style>
+</head>
+<body>
+    <div id="mainContent">
+    <header>
+        <nav id="home">
+            <div class="logo">
+                <img src="https://i.ibb.co/1G0BxBqZ/logo.png" alt="logo" >
+            </div>
+            <ul >
+                <li><a href="#home">Home</a></li>
+                <li><a href="#mission">Our Mission</a></li>
+                <li><a href="#clients">Our Clients</a></li>
+                <li><a href="#cert">Certifications</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+            <div class="menu-toggle">&#9776;</div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Redefining <br> Wellness, <br> Transforming <br> Care, <br> Empowering lives.</h1>
+                <button onclick="showServicePage()">DISCOVER OUR SOLUTIONS!</button>
+            </div>
+        </section>
+        
+    </main>
+
+    <section id="mission" class="mission">
+        <div class="mission-container">
+            <div class="mission-text">
+                <h2 class="section-heading">Our <span>Mission</span></h2> <br>
+                <p>Bringing simple, smart tech to healthcare and businesses in Nepal. We make medical imaging and patient care easier, so you can focus on what matters most improving lives.</p>
+            </div>
+            <div class="mission-image">
+                <img src="https://i.ibb.co/gbbmp447/mission.jpg" alt="mission" border="0">
+            </div>
+        </div>
+    </section>
+
+    <section id="clients" class="clients">
+        <h3 class="section-heading">Our <span>Clients</span></h3>
+        <div class="marquee">
+            <ul class="marquee-content">
+                <li><img src="https://i.ibb.co/bRmvK5j8/baidya-and-banskota.png" alt="baidya-and-banskota" border="0"></li>
+                <li><img src="https://i.ibb.co/hwyCtY0/birat-medical-college.png" alt="birat-medical-college" border="0"></li>
+                <li><img src="https://i.ibb.co/cXQWMYw1/CMC.png" alt="CMC" border="0"></li>
+                <li><img src="https://i.ibb.co/RkNPx04F/dhaka-medical-college.png" alt="dhaka-medical-college" border="0"></li>
+                <li><img src="https://i.ibb.co/1t62CVqh/grande.png" alt="grande" border="0"></li>
+                <li><img src="https://i.ibb.co/LXMn23N9/HRDC-1.png" alt="HRDC" border="0"></li>
+                <li><img src="https://i.ibb.co/ZtK1kng/ktm-medical-college.png" alt="ktm-medical-college" border="0"></li>
+                <li><img src="https://i.ibb.co/6Rbt9Jxt/mediciti.png" alt="mediciti" border="0"></li>
+                <li><img src="https://i.ibb.co/twmfgkVK/National-Medical-College-Image.png" alt="National-Medical-College-Image" border="0"></li>
+                <li><img src="https://i.ibb.co/DPMZQq3Z/nepal-cancer-hospital.png" alt="nepal-cancer-hospital" border="0"></li>
+                <li><img src="https://i.ibb.co/XkYBRd7H/nepalgunj-medical-college.png" alt="nepalgunj-medical-college" border="0"></li>
+                <li><img src="https://i.ibb.co/m5Vk4Spk/Nins-Remove-Background.png" alt="Nins-Remove-Background" border="0"></li>
+                <li><img src="https://i.ibb.co/QFMgnPyF/NMC.jpg" alt="NMC" border="0"></li>
+                <li><img src="https://i.ibb.co/rRg2P3r9/nobel-medical-college.png" alt="nobel-medical-college" border="0"></li>
+                <li><img src="https://i.ibb.co/BVzg4Cys/norvic.png" alt="norvic" border="0"></li>
+                <li><img src="https://i.ibb.co/Qjtpq7bX/PCH.png" alt="PCH" border="0"></li>
+                <li><img src="https://i.ibb.co/x81n6qMV/SMC-2.png" alt="Satkhira-Image-Preview" border="0"></li>
+                <li><img src="https://i.ibb.co/mFJpXsq2/upendra-devkota-memorial.png" alt="upendra-devkota-memorial" border="0"></li>
+                
+            </ul>
+          </div>
+
+    </section>
+
+
+    <section id="cert" class="certification-container">
+        <div class="certification-section">
+        <div class="certifications">
+            <div class="cert">
+                <img class="main-img" src="https://i.ibb.co/qMYMVKP8/usa.jpg" alt="USA Certification">
+                <img class="badge-img" src="https://i.ibb.co/5WW2VVCc/fda.jpg" alt="FDA Badge">
+            </div>
+            <div class="cert">
+                <img class="main-img" src="https://i.ibb.co/35bs1Xy7/Thailand-flag.jpg" alt="Thailand Certification">
+                <img class="badge-img" src="https://i.ibb.co/3m7rfCV9/Thai-FDA.jpg" alt="Thai FDA Badge">
+            </div>
+            <div class="cert">
+                <img class="main-img" src="https://i.ibb.co/TByhC7SV/japan.jpg" alt="Japan Certification">
+                <img class="badge-img" src="https://i.ibb.co/9mF9zs4k/Pda-Japan.jpg" alt="PMDA Japan Badge">
+            </div>
+        </div>
+        <p class="text">Processing 200 Million Images and Hundreds of Tera Bytes of Data every day.</p>
+    </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <h2 class="section-heading">Connect with Us</h2>
+            <div class="contact-content">
+                <div class="qr-code">
+                    <img src="https://i.ibb.co/TMpgdyxT/Fb-qr.jpg" alt="Fb-qr" border="0">
+                </div>
+                <div class="contact-info">
+                    <p><strong>Mailing Address</strong><br> <a href="https://www.google.com/maps/place/Downtown+Apartment/@27.6466818,85.3235662,17z/data=!3m1!4b1!4m6!3m5!1s0x39eb176f85dc1d07:0x84cc9cd0c8c0a85b!8m2!3d27.6466771!4d85.3261411!16s%2Fg%2F11c1pqg_qv?entry=ttu&g_ep=EgoyMDI1MDEwNi4xIKXMDSoJLDEwMjExMjMzSAFQAw%3D%3D">3rd Floor, Thasikhel, Lalitpur Nepal</a></p> <br>
+                    <p><strong>Email Address</strong><br> <a href="mailto:avayabajracharya@psp-saiitek.com">avayabajracharya@psp-saiitek.com</a> </p> <br> 
+                    <p><strong>Phone Number</strong><br>  <a href="tel:+9779823085834">+977 9823085834</a>, 
+                        <a href="tel:+9779709042808">+977 9709042808</a></p>
+                    
+
+                    
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+   
+    </div>
+
+    <section id="servicePage">
+        <header class="nav-header">
+            <nav>
+                <div class="back-icon" onclick="goBack()">
+                    <img src="https://i.ibb.co/994T4rKM/arrow.png" alt="Back Icon">
+                </div>
+            </nav>
+        </header>
+        <h2 class="header-serv">Our Services </h2>
+    
+        <div class="services-container">
+            <div class="service" > <a href="#SIS">
+                <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Smart Image Storage">
+                <h3>Smart Image Storage</h3>
+                <p>Store and manage medical images efficiently. Secure cloud access ensures seamless integration with hospital systems.</p>  </a>
+            </div>
+            <div class="service"> <a href="#PRM">
+                <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Patient Record Management">
+                <h3>Patient Record Management</h3>
+                <p>Digitize and protect patient records for easy access. Improve efficiency through secure and organized data handling.</p> </a>
+            </div>
+            <div class="service"> <a href="#RCS">
+                <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Radiology Care Suite">
+                <h3>Radiology Care Suite</h3>
+                <p>Enhance diagnostic accuracy with AI-assisted tools. Fast and precise image analysis improves patient care.</p> </a>
+            </div>
+            <div class="service"> <a href="#MV">
+                <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="MammoVision">
+                <h3>MammoVision</h3>
+                <p>Detect breast cancer early with high-resolution imaging. AI-driven insights assist doctors in making informed decisions.</p> </a>
+            </div> 
+            <div class="service">  <a href="#HMA">
+                <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Health Monitoring App">
+                <h3>Health Monitoring App</h3>
+                <p>Monitor health statistics with real-time analytics. Personalized alerts ensure proactive patient care.</p> </a>
+            </div>
+        </div>
+        <div>
+            <div id="SIS" class="section" style="background-color: #fdfdfd; ">
+                <h2 class="service-subheads">Smart Image Storage</h2>
+                <div class="image-container">
+                    <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Smart Image Storage">
+                    <p class="texts">Our advanced Smart Image Storage system ensures secure and efficient management of medical imaging data. Equipped with high-level encryption, AI-powered organization, and seamless cloud integration, it enhances accessibility and retrieval. This system supports various medical formats, ensuring compatibility across hospitals and diagnostic centers. The automated categorization and tagging features help healthcare professionals quickly locate and analyze medical images, improving workflow efficiency and patient outcomes.</p>
+                </div>
+            </div>
+            <div id="PRM" class="section" style="background-color: #dfe6f3;">
+                <h2 class="service-subheads">Patient Record Management</h2>
+                <div class="image-container">
+                    <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Patient Record Management">
+                    <p class="texts">Our system revolutionizes patient record management by offering a centralized, digital repository for medical records. Features include real-time updates, AI-powered predictive analysis, and automated data entry, reducing administrative burdens. Patients benefit from improved service quality, while doctors can quickly access comprehensive medical histories, lab results, and treatment plans. Secure access ensures data privacy while enabling seamless collaboration among medical teams.</p>
+                </div>
+            </div>
+            <div id="RCS" class="section" style="background-color: #fdfdfd;">
+                <h2 class="service-subheads">Radiology Care Suite</h2>
+                <div class="image-container">
+                    <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Radiology Care Suite">
+                    <p class="texts">Our Radiology Care Suite is an all-encompassing solution designed to enhance diagnostic precision and efficiency. It integrates AI-driven imaging analysis, enabling radiologists to detect anomalies with greater accuracy. The suite offers real-time image sharing, collaborative reporting, and cloud-based access to past scans, ensuring seamless workflow integration. This technology empowers medical teams with faster diagnostic capabilities, leading to improved patient outcomes and reduced wait times for critical diagnoses.</p>
+                </div>
+            </div>
+            <div  class="section" style="background-color: #dfe6f3; " id="MV">
+                <h2  class="service-subheads">MammoVision</h2>
+                <div class="image-container">
+                    <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="MammoVision">
+                    <p class="texts">MammoVision is an advanced breast cancer screening solution that combines high-resolution imaging with AI-assisted diagnostics. It enhances early detection rates, providing accurate assessments with minimal false positives. The system is designed for seamless integration with existing hospital databases, facilitating effortless record management and real-time consultations. With an intuitive interface and automated reporting features, MammoVision ensures efficient, data-driven decision-making for healthcare professionals.</p>
+                </div>
+            </div>
+            <div id="HMA" class="section" style="background-color: #fdfdfd;">
+                <h2 class="service-subheads">Health Monitoring App</h2>
+                <div class="image-container">
+                    <img src="https://i.ibb.co/0cQcWgK/app.jpg" alt="Health Monitoring App">
+                    <p class="texts">Our Health Monitoring App is a next-generation solution for tracking vital health metrics in real-time. It integrates with wearable devices to monitor heart rate, blood pressure, oxygen levels, and more. AI-driven analytics provide personalized health insights, allowing users to take proactive steps towards better well-being. The app also features remote consultations, medication reminders, and emergency alert systems, ensuring continuous care and connectivity between patients and healthcare providers.</p>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>© <span id="year"></span> Saiitek Solutions. All rights reserved.</p>   
+         </footer>
+    </section>
+
+     
+     <footer>
+        <p>© <span id="year"></span> Saiitek Solutions. All rights reserved.</p>   
+     </footer>
+    <script>
+
+        // logo link 
+
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.classList.add("loaded");
+        });
+
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector("nav ul");
+        const links = document.querySelectorAll("nav a");
+
+        menuToggle.addEventListener("click", () => {
+            navLinks.classList.toggle("active");
+            menuToggle.innerHTML = navLinks.classList.contains("active") ? "✖" : "&#9776;";
+        });
+
+        // Active page selection
+    
+        
+                // Marquee for clients
+
+        const root = document.documentElement;
+        const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
+        const marqueeContent = document.querySelector("ul.marquee-content");
+
+        root.style.setProperty("--marquee-elements", marqueeContent.children.length);
+
+        for(let i=0; i<marqueeElementsDisplayed; i++) {
+          marqueeContent.appendChild(marqueeContent.children[i].cloneNode(true));
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const sections = document.querySelectorAll("section:not(.hero)");
+
+    const observer = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.2 }
+    );
+
+    sections.forEach(section => {
+        section.classList.add("hidden");
+        observer.observe(section);
+    });
+});
+
+// Smooth Scroll & Trigger Animation
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(event) {
+        event.preventDefault();
+        
+        const targetId = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+
+        window.scrollTo({
+            top: targetSection.offsetTop - 50, 
+            behavior: 'smooth'
+        });
+
+        // Ensure the animation runs when clicked, only if screen width is larger than 768px
+        if (window.innerWidth > 768) {
+            setTimeout(() => {
+                targetSection.querySelector('.section-heading').classList.add('active');
+            }, 500);
+        }
+    });
+});
+
+// Heading Animation on Scroll
+function revealSections() {
+    const sections = document.querySelectorAll('.section-heading');
+
+    sections.forEach(heading => {
+        const sectionTop = heading.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (sectionTop < windowHeight * 0.75) {
+            heading.classList.add('active');
+        }
+    });
+}
+
+// Run the function on scroll
+window.addEventListener('scroll', revealSections);
+
+// Initial check on page load
+document.addEventListener('DOMContentLoaded', revealSections);
+
+// auto year change in footer
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// service page 
+function showServicePage() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('servicePage').style.display = 'block';
+        }
+
+
+        // content of service page 
+          // Function to navigate back to the previous page
+          // Function to navigate back to the main page from the service page
+          function goBack() {
+    document.getElementById("servicePage").style.display = 'none';
+    document.getElementById("mainContent").style.display = 'block';
+    document.body.style.overflow = 'auto'; // Restore scrolling
+
+    setTimeout(() => {
+        document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+    }, 100);
+}
+
+
+
+
+
+
+        // Function to add animation class to the header
+        document.addEventListener("DOMContentLoaded", function () {
+            let header = document.querySelector(".header-serv");
+            header.classList.add("animate");
+        });
+
+        // linking service page
+
+        function showServicePage() {
+    document.getElementById('mainContent').style.display = 'none';
+    document.getElementById('servicePage').style.display = 'block';
+    document.body.style.overflow = 'auto'; // Enable scrolling
+
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100); // Add slight delay to avoid bugs
+}
+
+
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll(".section");
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("fade-in");
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => observer.observe(section));
+        });
+
+
+        // scrolling effect in service page 
+        document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("#servicePage a[href^='#']").forEach(anchor => {
+        anchor.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const targetId = this.getAttribute("href").substring(1); // Get target ID
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+
+                // Add animation when section is reached
+                targetElement.classList.add("scroll-animation");
+
+                // Remove animation after a delay
+                setTimeout(() => {
+                    targetElement.classList.remove("scroll-animation");
+                }, 1000);
+            }
+        });
+    });
+});
+
+
+        
+
+
+    </script>
+
+</body>
+</html>
+
+
